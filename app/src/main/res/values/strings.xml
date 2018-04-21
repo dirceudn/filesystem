@@ -1,6 +1,11 @@
 <resources>
-    <string name="app_name">LimaTest</string>
+    <string name="app_name">lima</string>
     <string name="str_name">file</string>
     <string name="str_size">size</string>
     <string name="str_date">date</string>
+    <string name="action_settings">settings</string>
+    <string name="action_search">search</string>
+    <string name="action_folder">folder</string>
+    <string name="str_directory">directory</string>
+    <string name="str_time_default">00</string>
 </resources>
