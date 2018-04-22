@@ -49,3 +49,7 @@ _For more examples and usage, please refer to the [Wiki][wiki]._
 * [Glide](https://github.com/bumptech/glide)
 * UI: RecyclerView, ConstraintLayout.
 
+## License
+
+MIT
+
