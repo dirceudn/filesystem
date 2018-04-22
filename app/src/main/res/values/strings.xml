@@ -18,4 +18,6 @@
     <string name="str_share_link">Share link</string>
     <string name="str_default_title">Song</string>
     <string name="str_buffer">Buffering ...</string>
+    <string name="str_folders">Folders</string>
+    <string name="str_section">section</string>
 </resources>

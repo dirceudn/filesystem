@@ -171,7 +171,7 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.ViewHolder> im
                     break;
                 case R.id.image_more:
                     if (recyclerViewClickListener != null) {
-                        recyclerViewClickListener.recyclerViewClick(view, this.getLayoutPosition(), "OPTIONS");
+                        recyclerViewClickListener.recyclerViewClick(view, this.getLayoutPosition(), "option");
                     }
                     break;
 

@@ -75,6 +75,7 @@ public class AudioPlayerActivity extends AppCompatActivity implements MediaPlaye
 
     @Override
     public void onCompletion(MediaPlayer mp) {
+        stopSong();
 
     }
 
@@ -104,6 +105,7 @@ public class AudioPlayerActivity extends AppCompatActivity implements MediaPlaye
         }
 
         try {
+            enableControls(false);
             musicTitleLabel.setText(R.string.str_buffer);
             mediaPlayerManager.audioPlayer.setDataSource(songUrl);
             mediaPlayerManager.audioPlayer.prepareAsync();
@@ -111,8 +113,11 @@ public class AudioPlayerActivity extends AppCompatActivity implements MediaPlaye
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ;
 
+    }
+
+    private void enableControls(boolean isEnable) {
+        btnPlay.setEnabled(isEnable);
 
     }
 
@@ -180,9 +185,9 @@ public class AudioPlayerActivity extends AppCompatActivity implements MediaPlaye
 
     @Override
     public void onPrepared(MediaPlayer mp) {
+        enableControls(true);
         musicTitleLabel.setText(node.getName());
         mediaPlayerManager.audioPlayer.start();
-
         musicProgressBar.setProgress(0);
         musicProgressBar.setMax(100);
         updateProgressBar();

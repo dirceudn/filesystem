@@ -25,4 +25,10 @@ public interface MainView {
     void shareFileWithFriends(Node node);
 
     void openFileWith(Node node);
+
+    void deleteFileFromServer(Node node);
+
+    void moveFileFromServer(Node node);
+
+    void renameFile(Node node);
 }

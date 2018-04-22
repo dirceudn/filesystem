@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sample.dirceu.limatest.adapters.NodeAdapter;
 import com.sample.dirceu.limatest.components.DaggerNodeComponent;
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        toolbar.setNavigationIcon(R.drawable.ic_home_24dp);
 
 
         DaggerNodeComponent.builder()
@@ -100,10 +101,15 @@ public class MainActivity extends AppCompatActivity implements MainView,
         TextView textViewOpenWith = findViewById(R.id.btn_open_with);
         TextView textViewShareWith = findViewById(R.id.btn_share);
         TextView textViewShareLink = findViewById(R.id.btn_share_link);
+        TextView textViewDeleteFile = findViewById(R.id.btn_delete);
+        TextView textViewMoveFile = findViewById(R.id.btn_move);
+        TextView textViewRenameFile = findViewById(R.id.btn_rename);
 
         ImageView imageViewCloseOpt = findViewById(R.id.image_close);
         imageViewCloseOpt.setOnClickListener(this);
-
+        textViewDeleteFile.setOnClickListener(this);
+        textViewRenameFile.setOnClickListener(this);
+        textViewMoveFile.setOnClickListener(this);
         textViewOpenWith.setOnClickListener(this);
         textViewShareWith.setOnClickListener(this);
         textViewShareLink.setOnClickListener(this);
@@ -118,7 +124,6 @@ public class MainActivity extends AppCompatActivity implements MainView,
     }
 
     private void backToParentDirectory() {
-
         if (!currentPath.equals(rootPath)) {
             currentPath = currentPath.replace(childPath, "");
             presenter.loadListOfNode(currentPath);
@@ -178,8 +183,8 @@ public class MainActivity extends AppCompatActivity implements MainView,
         recyclerView.setAdapter(adapter);
         setToolBarTitle(currentPath);
 
-
     }
+
 
     private void setToolBarTitle(String currentPath) {
         toolbar.setTitle(currentPath);
@@ -187,6 +192,8 @@ public class MainActivity extends AppCompatActivity implements MainView,
 
     @Override
     public void showError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
 
     }
 
@@ -269,11 +276,27 @@ public class MainActivity extends AppCompatActivity implements MainView,
     }
 
     @Override
+    public void deleteFileFromServer(Node node) {
+        showError("This feature is currently not available");
+    }
+
+    @Override
+    public void moveFileFromServer(Node node) {
+        showError("This feature is currently not available");
+
+    }
+
+    @Override
+    public void renameFile(Node node) {
+        showError("This feature is currently not available");
+
+    }
+
+    @Override
     public void recyclerViewClick(View view, int position, String tag) {
         currentNode = adapter.getNodeList().get(position);
-        if ("OPTIONS".equals(tag)) {
+        if ("option".equals(tag)) {
             openFileOptionsMenu(currentNode);
-            relativeLayoutOptions.setVisibility(View.VISIBLE);
 
         } else if (!relativeLayoutOptions.isShown()) {
             if ("inode/directory".equals(currentNode.getMimetype())) {
@@ -324,6 +347,15 @@ public class MainActivity extends AppCompatActivity implements MainView,
                 break;
             case R.id.btn_open_with:
                 openFileWith(currentNode);
+                break;
+            case R.id.btn_delete:
+                deleteFileFromServer(currentNode);
+                break;
+            case R.id.btn_move:
+                moveFileFromServer(currentNode);
+                break;
+            case R.id.btn_rename:
+                renameFile(currentNode);
                 break;
             default:
                 break;
