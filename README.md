@@ -1,6 +1,8 @@
 # File system
 
-[![Build Status][travis-image]][travis-url]
+[![Build Status](https://travis-ci.org/anfederico/Clairvoyant.svg?branch=master)](https://travis-ci.org/anfederico/Clairvoyant)
+
+## Basic Overview
 
  This app will give the user access to a "file system" that can be accessed using an HTTP REST API.The endpoint for this     exercise is located at http://private-2c2b2-nodes4.apiary-mock.com/nodes.
 
