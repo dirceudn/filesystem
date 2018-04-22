@@ -79,9 +79,24 @@ public class MediaPlayerManager {
     }
 }
 ```
-
-
-
+### TODO (Audio Player) 
+ * Play a list of songs in order or random
+ * Create an option to repate the song
+ * Save the music to play offline
+ 
+ ### TODO (Video Player) 
+ * Implements the custom video controller
+ * Save the video to play offline
+ * Add options like subtitle, sound control screencast.
+ 
+ 
+ ### TODO (Image Player) 
+ * Implements a gallery to show all image on gride formart
+ * Create an image slide show
+ * Set image like wallpaper
+ * Edit image (resize, color, filter)
+ * Save image offline
+ 
 ## Contributing
 
 1. Fork it (https://github.com/dirceudn/filesystem.git)
