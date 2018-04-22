@@ -1,4 +1,4 @@
-# Filesystem
+# File system
 > Short blurb about what your product does.
 
 [![Build Status][travis-image]][travis-url]
