@@ -37,8 +37,13 @@ Here is an architecture diagram of the system. The first one is an overview of t
 
 ## Libraries and technical decisions
 
-### Glider 
+### Glider
 The glider library in terms of optimization is superior to picasso and still supports animated gifs.Also, because of Glide integrates with the activity life-cycle, animated GIFs are also paused in onStop() to avoid draining the battery in the background. I used the library in my app without handle with large images and loading.
+#### FSome features that Glide support but not Picasso:
+* Animated GIF support
+* Thumbnail support
+* Configurations & Customization
+
 
 ```java
  //TODO implements the GlideImageLoader to handle with large images, progress and cache.
