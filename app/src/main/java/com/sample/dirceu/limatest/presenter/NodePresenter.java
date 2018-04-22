@@ -1,7 +1,5 @@
 package com.sample.dirceu.limatest.presenter;
 
-import android.util.Log;
-
 import com.sample.dirceu.limatest.model.Node;
 import com.sample.dirceu.limatest.view.MainView;
 
@@ -16,12 +14,12 @@ import rx.schedulers.Schedulers;
 
 public class NodePresenter {
 
-    MainView mainView;
-    BasePresenter basePresenter;
+    private MainView mainView;
+    private BasePresenter basePresenter;
 
 
     @Inject
-    public NodePresenter(MainView view, BasePresenter presenter) {
+    NodePresenter(MainView view, BasePresenter presenter) {
         this.basePresenter = presenter;
         this.mainView = view;
 
@@ -59,7 +57,6 @@ public class NodePresenter {
     public void openNodeWithPlayer(Node node) {
         if (node.getMimetype().startsWith("image")) {
             mainView.openImagePlayer(node);
-
         } else if (node.getMimetype().startsWith("audio")) {
             mainView.openAudioPlayer(node);
         } else if (node.getMimetype().startsWith("video")) {
