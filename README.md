@@ -26,7 +26,14 @@
 
 ## App Architecture
 
-A few motivating and useful examples of how your product can be used. Spice this up with code blocks and potentially more screenshots.
+Here is an architecture diagram of the system. The first one is an overview of the components using dagger 2 and the second is a mvp design.
+
+![alt text](https://github.com/dirceudn/filesystem/blob/master/filesystem.png)
+
+-----
+
+![alt text](https://github.com/dirceudn/filesystem/blob/master/filesystemMvp.png)
+
 
 _For more examples and usage, please refer to the [Wiki][wiki]._
 
