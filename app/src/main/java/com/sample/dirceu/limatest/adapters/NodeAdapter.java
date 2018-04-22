@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,16 +16,19 @@ import com.sample.dirceu.limatest.interfaces.RecyclerViewClickListener;
 import com.sample.dirceu.limatest.model.Node;
 import com.sample.dirceu.limatest.util.Utility;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.ViewHolder> {
+public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.ViewHolder> implements Filterable {
 
 
     List<Node> nodeList;
+    List<Node> nodeListFilterable;
     RecyclerViewClickListener recyclerViewClickListener;
 
     public NodeAdapter(List<Node> list, RecyclerViewClickListener listener) {
         this.nodeList = list;
+        this.nodeListFilterable = list;
         this.recyclerViewClickListener = listener;
 
     }
@@ -38,7 +43,7 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull NodeAdapter.ViewHolder holder, int position) {
-        Node currentNode = nodeList.get(position);
+        Node currentNode = nodeListFilterable.get(position);
         holder.textViewName.setText(currentNode.getName());
         holder.textViewSize.setText(Utility.getFileSize(currentNode.getSize()));
         holder.textViewDate.setText(Utility.convertTimeStampToDate(currentNode.getNotification_time()));
@@ -52,6 +57,7 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.ViewHolder> {
             case "inode/directory":
                 holder.imageViewFile.setImageResource(R.drawable.ic_folder_default_24dp);
                 holder.textViewSize.setText(R.string.str_directory);
+                holder.imageViewOptions.setVisibility(View.GONE);
                 break;
             case "image/png":
                 holder.imageViewFile.setImageResource(R.drawable.ic_file_png_24dp);
@@ -95,11 +101,43 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return nodeList.size();
+        return nodeListFilterable.size();
     }
 
     public List<Node> getNodeList() {
-        return nodeList;
+        return nodeListFilterable;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    nodeListFilterable = nodeList;
+                } else {
+                    ArrayList<Node> filteredList = new ArrayList<>();
+                    for (Node row : nodeList) {
+                        if (row.getName().toLowerCase().contains(charString.toLowerCase()) ||
+                                row.getMimetype().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+                    nodeListFilterable = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = nodeListFilterable;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                nodeListFilterable = (ArrayList<Node>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -113,14 +151,14 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.ViewHolder> {
         ViewHolder(View itemView) {
             super(itemView);
 
-            itemView.setOnClickListener(this);
 
             imageViewFile = itemView.findViewById(R.id.image_file);
-            imageViewOptions = imageViewFile.findViewById(R.id.image_more);
+            imageViewOptions = itemView.findViewById(R.id.image_more);
             textViewSize = itemView.findViewById(R.id.text_size);
             textViewDate = itemView.findViewById(R.id.text_date);
             textViewName = itemView.findViewById(R.id.text_name);
-
+            imageViewOptions.setOnClickListener(this);
+            itemView.setOnClickListener(this);
         }
 
         @Override
@@ -128,11 +166,13 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.ViewHolder> {
             switch (view.getId()) {
                 case R.id.node_layout:
                     if (recyclerViewClickListener != null) {
-                        recyclerViewClickListener.recyclerViewClick(view, this.getLayoutPosition());
+                        recyclerViewClickListener.recyclerViewClick(view, this.getLayoutPosition(), null);
                     }
                     break;
                 case R.id.image_more:
-                    Log.v("MORE", "more more more");
+                    if (recyclerViewClickListener != null) {
+                        recyclerViewClickListener.recyclerViewClick(view, this.getLayoutPosition(), "OPTIONS");
+                    }
                     break;
 
                 default:

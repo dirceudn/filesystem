@@ -15,6 +15,7 @@ public enum Utility {
     INSTANCE;
 
     public static final String BASE_URL = "http://private-2c2b2-nodes4.apiary-mock.com";
+    public static final String VIDEO = "VIDEO";
     public static String IMAGE = "IMAGE";
     public static String DOCUMENT = "DOCUMENT";
     public static String AUDIO = "AUDIO";

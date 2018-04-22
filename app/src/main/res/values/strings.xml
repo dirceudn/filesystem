@@ -8,4 +8,14 @@
     <string name="action_folder">folder</string>
     <string name="str_directory">directory</string>
     <string name="str_time_default">00</string>
+    <string name="search_hint">Search name or type ...</string>
+    <string name="str_offline">Keep offline</string>
+    <string name="str_share">Share</string>
+    <string name="str_delete">Delete</string>
+    <string name="str_move">Move</string>
+    <string name="str_rename">Rename</string>
+    <string name="str_open">Open with</string>
+    <string name="str_share_link">Share link</string>
+    <string name="str_default_title">Song</string>
+    <string name="str_buffer">Buffering ...</string>
 </resources>

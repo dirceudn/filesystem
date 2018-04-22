@@ -30,6 +30,11 @@
 
         </activity>
         <activity
+            android:name=".players.VideoPlayerActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+
+        </activity>
+        <activity
             android:name=".players.AudioPlayerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait">

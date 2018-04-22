@@ -26,6 +26,11 @@
 
         </android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.SwipeRefreshLayout>
+    <include
+        android:id="@+id/option"
+        layout="@layout/layout_file_options">
+
+    </include>
 
 
 </RelativeLayout>

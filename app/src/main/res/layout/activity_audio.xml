@@ -15,19 +15,22 @@
     <LinearLayout
         android:id="@+id/songThumbnail"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginTop="?android:attr/actionBarSize"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/text_music_title"
         android:gravity="center">
 
+
         <ImageView
+            android:id="@+id/image_cover"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
-            android:background="@drawable/item_border_cover"
             android:src="@drawable/album_cover" />
+
     </LinearLayout>
+
 
     <TextView
         android:id="@+id/text_music_title"
@@ -36,7 +39,7 @@
         android:layout_above="@id/songProgressBar"
         android:background="@color/colorTransparent"
         android:padding="10dp"
-        android:text="music title"
+        android:text="@string/str_default_title"
         android:textAlignment="center"
         android:textColor="@android:color/white" />
 
@@ -113,7 +116,7 @@
                 android:src="@drawable/btn_left" />
             <!-- Play Button -->
             <ImageButton
-                android:id="@+id/btnPlay"
+                android:id="@+id/btn_play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -133,6 +136,8 @@
 
         </LinearLayout>
     </RelativeLayout>
+
+
 
 
 </RelativeLayout>

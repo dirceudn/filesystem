@@ -10,7 +10,7 @@ public class MediaPlayerManager {
     private MediaPlayerManager() {
     }
 
-    public static MediaPlayerManager getInstance() {
+     static MediaPlayerManager getInstance() {
         if (instance == null) {
             synchronized (MediaPlayerManager.class) {
                 if (instance == null) {

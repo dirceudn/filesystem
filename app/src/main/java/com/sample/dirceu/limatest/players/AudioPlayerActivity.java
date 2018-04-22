@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.sample.dirceu.limatest.R;
 import com.sample.dirceu.limatest.model.Node;
-import com.sample.dirceu.limatest.services.IAudioPlayer;
+import com.sample.dirceu.limatest.interfaces.IAudioPlayer;
 import com.sample.dirceu.limatest.util.Utility;
 
 import java.io.IOException;
@@ -20,22 +22,24 @@ import java.util.Objects;
 import static com.sample.dirceu.limatest.players.MediaPlayerManager.getInstance;
 
 public class AudioPlayerActivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener
-        , SeekBar.OnSeekBarChangeListener, IAudioPlayer {
+        , SeekBar.OnSeekBarChangeListener, IAudioPlayer,
+        MediaPlayer.OnPreparedListener, View.OnClickListener {
 
-    private Toolbar toolbar;
     private SeekBar musicProgressBar;
     private TextView musicTitleLabel;
     private TextView musicCurrentDurationLabel;
     private TextView musicTotalDurationLabel;
+    private ImageButton btnPlay;
     MediaPlayerManager mediaPlayerManager = getInstance();
     private Handler mHandler = new Handler();
+    private Node node;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio);
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
 
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
@@ -48,8 +52,8 @@ public class AudioPlayerActivity extends AppCompatActivity implements MediaPlaye
 
     private void loadBundleData() {
         Bundle bundle = getIntent().getExtras();
-        Node node = (Node) Objects.requireNonNull(bundle).getSerializable(Utility.AUDIO);
-        musicTitleLabel.setText(node.getName());
+        node = (Node) Objects.requireNonNull(bundle).getSerializable(Utility.AUDIO);
+        musicTitleLabel.setText(Objects.requireNonNull(node).getName());
         playSong(Objects.requireNonNull(node).getUrl());
         mediaPlayerManager.audioPlayer.setOnCompletionListener(this); // Important
 
@@ -60,6 +64,8 @@ public class AudioPlayerActivity extends AppCompatActivity implements MediaPlaye
         musicTitleLabel = findViewById(R.id.text_music_title);
         musicTotalDurationLabel = findViewById(R.id.songTotalDurationLabel);
         musicCurrentDurationLabel = findViewById(R.id.songCurrentDurationLabel);
+        btnPlay = findViewById(R.id.btn_play);
+        btnPlay.setOnClickListener(this);
 
 
         musicProgressBar.setOnSeekBarChangeListener(this); // Important
@@ -98,16 +104,14 @@ public class AudioPlayerActivity extends AppCompatActivity implements MediaPlaye
         }
 
         try {
+            musicTitleLabel.setText(R.string.str_buffer);
             mediaPlayerManager.audioPlayer.setDataSource(songUrl);
-            mediaPlayerManager.audioPlayer.prepare();
+            mediaPlayerManager.audioPlayer.prepareAsync();
+            mediaPlayerManager.audioPlayer.setOnPreparedListener(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        mediaPlayerManager.audioPlayer.start();
-
-        musicProgressBar.setProgress(0);
-        musicProgressBar.setMax(100);
-        updateProgressBar();
+        ;
 
 
     }
@@ -132,7 +136,7 @@ public class AudioPlayerActivity extends AppCompatActivity implements MediaPlaye
                         Utility.INSTANCE.milliSecondsToTimer(currentDuration)));
 
                 // Updating progress bar
-                int progress = (int) (Utility.INSTANCE.getProgressPercentage(currentDuration, totalDuration));
+                int progress = Utility.INSTANCE.getProgressPercentage(currentDuration, totalDuration);
                 musicProgressBar.setProgress(progress);
 
                 // Running this thread after 100 milliseconds
@@ -148,12 +152,9 @@ public class AudioPlayerActivity extends AppCompatActivity implements MediaPlaye
             mediaPlayerManager.audioPlayer.reset();
             mediaPlayerManager.audioPlayer.release();
             mediaPlayerManager.audioPlayer = null;
+            changeButtonControlLabel();
+            musicProgressBar.setProgress(0);
         }
-
-    }
-
-    @Override
-    public void pauseSong() {
 
     }
 
@@ -176,4 +177,47 @@ public class AudioPlayerActivity extends AppCompatActivity implements MediaPlaye
         mHandler.removeCallbacks(mUpdateTimeTask);
         stopSong();
     }
+
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+        musicTitleLabel.setText(node.getName());
+        mediaPlayerManager.audioPlayer.start();
+
+        musicProgressBar.setProgress(0);
+        musicProgressBar.setMax(100);
+        updateProgressBar();
+        changeButtonControlLabel();
+
+
+    }
+
+    private void changeButtonControlLabel() {
+        if (mediaPlayerManager.audioPlayer != null) {
+            btnPlay.setImageResource(R.drawable.btn_stop);
+        } else {
+            btnPlay.setImageResource(R.drawable.btn_play);
+
+        }
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_play:
+                if (mediaPlayerManager.audioPlayer != null) {
+                    stopSong();
+                    changeButtonControlLabel();
+                } else {
+                    playSong(node.getUrl());
+                    changeButtonControlLabel();
+                }
+                break;
+            default:
+                break;
+        }
+
+    }
+
+
 }

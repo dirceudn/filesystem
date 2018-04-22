@@ -17,4 +17,12 @@ public interface MainView {
     void openDocument(Node node);
 
     void openImagePlayer(Node node);
+
+    void openFileOptionsMenu(Node node);
+
+    void hideFileOptionsMenu();
+
+    void shareFileWithFriends(Node node);
+
+    void openFileWith(Node node);
 }
