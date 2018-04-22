@@ -2,7 +2,7 @@
 
 [![Build Status][travis-image]][travis-url]
 
-This app will give the user access to a "file system" that can be accessed using an HTTP REST API.The endpoint for this exercise is located at http://private-2c2b2-nodes4.apiary-mock.com/nodes.
+ This app will give the user access to a "file system" that can be accessed using an HTTP REST API.The endpoint for this     exercise is located at http://private-2c2b2-nodes4.apiary-mock.com/nodes.
 
 ![](header.png)
 
@@ -41,5 +41,9 @@ _For more examples and usage, please refer to the [Wiki][wiki]._
 
 ## Libraries
 
-<!-- Markdown link & img dfn's -->
+* [RxJava 2](https://github.com/ReactiveX/RxJava)
+* [Dagger 2](https://github.com/google/dagger)
+* [Retrofit](https://github.com/square/retrofit) + [OkHttp](https://github.com/square/okhttp)
+* [Glide](https://github.com/bumptech/glide)
+* UI: RecyclerView, ConstraintLayout.
 
