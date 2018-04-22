@@ -31,4 +31,6 @@ public interface MainView {
     void moveFileFromServer(Node node);
 
     void renameFile(Node node);
+
+    void saveFileOffline(Node node);
 }

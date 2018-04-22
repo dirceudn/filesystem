@@ -2,7 +2,6 @@ package com.sample.dirceu.limatest.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +21,9 @@ import java.util.List;
 public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.ViewHolder> implements Filterable {
 
 
-    List<Node> nodeList;
-    List<Node> nodeListFilterable;
-    RecyclerViewClickListener recyclerViewClickListener;
+    private List<Node> nodeList;
+    private List<Node> nodeListFilterable;
+    private RecyclerViewClickListener recyclerViewClickListener;
 
     public NodeAdapter(List<Node> list, RecyclerViewClickListener listener) {
         this.nodeList = list;
@@ -46,7 +45,6 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.ViewHolder> im
         Node currentNode = nodeListFilterable.get(position);
         holder.textViewName.setText(currentNode.getName());
         holder.textViewSize.setText(Utility.getFileSize(currentNode.getSize()));
-        holder.textViewDate.setText(Utility.convertTimeStampToDate(currentNode.getNotification_time()));
         setImageIconWithType(currentNode.getMimetype(), holder);
 
 
@@ -146,7 +144,7 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.ViewHolder> im
         private ImageView imageViewOptions;
         private TextView textViewName;
         private TextView textViewSize;
-        private TextView textViewDate;
+
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -155,7 +153,6 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.ViewHolder> im
             imageViewFile = itemView.findViewById(R.id.image_file);
             imageViewOptions = itemView.findViewById(R.id.image_more);
             textViewSize = itemView.findViewById(R.id.text_size);
-            textViewDate = itemView.findViewById(R.id.text_date);
             textViewName = itemView.findViewById(R.id.text_name);
             imageViewOptions.setOnClickListener(this);
             itemView.setOnClickListener(this);

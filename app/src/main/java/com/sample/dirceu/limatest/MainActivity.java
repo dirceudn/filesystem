@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -104,7 +105,9 @@ public class MainActivity extends AppCompatActivity implements MainView,
         TextView textViewDeleteFile = findViewById(R.id.btn_delete);
         TextView textViewMoveFile = findViewById(R.id.btn_move);
         TextView textViewRenameFile = findViewById(R.id.btn_rename);
+        Switch switchOffline = findViewById(R.id.switch_offline);
 
+        switchOffline.setOnClickListener(this);
         ImageView imageViewCloseOpt = findViewById(R.id.image_close);
         imageViewCloseOpt.setOnClickListener(this);
         textViewDeleteFile.setOnClickListener(this);
@@ -182,12 +185,21 @@ public class MainActivity extends AppCompatActivity implements MainView,
         adapter = new NodeAdapter(nodeList, this);
         recyclerView.setAdapter(adapter);
         setToolBarTitle(currentPath);
+        if (currentPath.equals(rootPath)) {
+            restoreHomeIcon();
+        }
 
+    }
+
+    private void restoreHomeIcon() {
+        toolbar.setNavigationIcon(R.drawable.ic_home_24dp);
     }
 
 
     private void setToolBarTitle(String currentPath) {
         toolbar.setTitle(currentPath);
+
+
     }
 
     @Override
@@ -293,6 +305,12 @@ public class MainActivity extends AppCompatActivity implements MainView,
     }
 
     @Override
+    public void saveFileOffline(Node node) {
+        showError("This feature is currently not available");
+
+    }
+
+    @Override
     public void recyclerViewClick(View view, int position, String tag) {
         currentNode = adapter.getNodeList().get(position);
         if ("option".equals(tag)) {
@@ -303,6 +321,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
                 currentPath = rootPath + currentNode.getPath();
                 childPath = currentNode.getPath();
                 presenter.loadListOfNode(currentPath);
+                toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
 
             } else {
                 presenter.openNodeWithPlayer(currentNode);
@@ -360,6 +379,9 @@ public class MainActivity extends AppCompatActivity implements MainView,
                 break;
             case R.id.btn_rename:
                 renameFile(currentNode);
+                break;
+            case R.id.switch_offline:
+                saveFileOffline(currentNode);
                 break;
             default:
                 break;
