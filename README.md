@@ -53,6 +53,35 @@ The glider library in terms of optimization is superior to picasso and still sup
                 .into(imageView);
 ```
 
+### Media Player (Audio) Native SDK
+
+ I use media player to play single instance of sound. Its avoid multiple instances of sound if the user clicks more than once for example 
+
+```java
+public class MediaPlayerManager {
+
+    MediaPlayer audioPlayer;
+    private static MediaPlayerManager instance = null;
+
+    private MediaPlayerManager() {
+    }
+
+     static MediaPlayerManager getInstance() {
+        if (instance == null) {
+            synchronized (MediaPlayerManager.class) {
+                if (instance == null) {
+                    instance = new MediaPlayerManager();
+                }
+            }
+        }
+
+        return instance;
+    }
+}
+```
+
+
+
 ## Contributing
 
 1. Fork it (https://github.com/dirceudn/filesystem.git)
