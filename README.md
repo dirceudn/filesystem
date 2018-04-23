@@ -81,13 +81,13 @@ public class MediaPlayerManager {
 ```
 ### TODO (Audio Player) 
  * Play a list of songs in order or random
- * Create an option to repate the song
+ * Create an option to repeate the song
  * Save the music to play offline
  
  ### TODO (Video Player) 
  * Implements the custom video controller
  * Save the video to play offline
- * Add options like subtitle, sound control screencast.
+ * Add options like subtitle, sound control and screencast.
  
  
  ### TODO (Image Player) 
